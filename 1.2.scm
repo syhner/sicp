@@ -137,33 +137,29 @@
       (* 2 (f (- n 2)))
       (* 3 (f (- n 3))))))
 
-; iterative
+; iterative, counter decrementing
 (define (f n)
   ; a = f(n-3), b = f(n-2), c = f(n-1)
   (define (iter a b c counter)
     (if (= counter 0)
         a
         ; on the next iteration
-        ; a = f(n-2) = b
-        ; b = f(n-1) = c
-        ; c = f(n) = c + 2b + 3a
-        ; counter = counter - 1
-        (iter b 
-              c 
-              (+ c (* 2 b) (* 3 a)) 
-              (- counter 1))))
-  (iter 0 1 2 n))  ; f(0) = 0, f(1) = 1, f(2) = 2
+        (iter b                     ; f(n-2) = b
+              c                     ; f(n-1) = c
+              (+ c (* 2 b) (* 3 a)) ; f(n) = c + 2b + 3a
+              (- counter 1))))      ; decrement counter
+  (iter 0 1 2 n)) ; f(0) = 0, f(1) = 1, f(2) = 2
 
-; iterative
+; iterative, counter incrementing
 (define (f n)
   (define (iter n-1 n-2 n-3 counter)
     (if (= counter n)
-        n-1  ; final result of the computation
-        (iter (+ n-1 (* 2 n-2) (* 3 n-3))  ; f(n)
+        n-1 ; final result of the computation
+        (iter (+ n-1 (* 2 n-2) (* 3 n-3)) ; f(n)
               n-1
               n-2 
               (+ 1 counter))))
-  (iter 2 1 0 2))  ; f(0) = 0, f(1) = 1, f(2) = 2
+  (iter 2 1 0 2)) ; n-1 = f(2) = 2, n-2 = f(1) = 1, n-3 = f(0) = 0, last computed term = f(2)
 
 (f 5)
 ; 25
