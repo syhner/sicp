@@ -19,6 +19,26 @@ size
 (sum-of-squares 3 4)
 ; 25
 
+; ----
+
+(define (p) (p))
+(define (test x y) (if (= x 0) 0 y))
+
+; (test 0 (p))
+
+; With applicative-order evaluation (eager / evaluate arguments first / evaluate arguments then apply)
+; the expression will never return a value because the interpreter tries to evaluate (p) and enters endless recursion.
+; this is what the scheme interpreter uses
+; interpreter doesn’t have to manage unevaluated expressions (thunks)
+
+; With normal-order evaluation (lazy / evaluate only when needed /fully expand and then reduce)
+; the expression will evaluate to zero. The (p) expression is never evaluated because it is not necessary to do so.
+; opt-in to lazy evaluation with
+(define (delay expr) (lambda () expr))
+(define (force thunk) (thunk))
+
+; ----
+
 (define (abs x)
   (cond ((> x 0) x)
     ((= x 0) 0)

@@ -22,9 +22,11 @@
   (define (iter product counter)
     (if (> counter n)
       product
-      (iter (* counter product) 
+      ; tail recursive since the last step in the evaluation (which is applicative) is the recursion step
+      (iter (* counter product)
             (+ counter 1))))
   (iter 1 1))
+
 
 (factorial 6)
 ; => (iter 1 1 6)
@@ -40,10 +42,10 @@
 
 ; tree recursive
 (define (fib n)
-(cond ((= n 0) 0)
-((= n 1) 1)
-(else (+ (fib (- n 1))
-(fib (- n 2))))))
+  (cond ((= n 0) 0)
+    ((= n 1) 1)
+    (else (+ (fib (- n 1))
+          (fib (- n 2))))))
 
 (fib 4)
 ; => (+ (fib 3) (fib 2))

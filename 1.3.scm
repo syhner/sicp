@@ -61,7 +61,7 @@
 ; the null-value is the identity for the operator
 
 ; recursive
-  (define (accumulate combiner null-value term a next b)
+(define (accumulate combiner null-value term a next b)
   (if (> a b)
       null-value
       (combiner (term a)
@@ -81,7 +81,16 @@
 (define (product term a next b)
   (accumulate * 1 term a next b))
 
-; TODO: example with 'let' in this file
+; ----
+
+; the folllwing are equivalent
+
+(define (multiply-then-add-five a b) 
+  (let ((c (* a b)))
+    (+ c 5)))
+
+(define (multiply-then-add-five a b)
+  ((lambda (c) (+ c 5)) (* a b))) ; IIFE
 
 ; ----
 
