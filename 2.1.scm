@@ -24,6 +24,8 @@
 
 ; ----
 
+; call to make-rat in each to ensures result is always in it's simplest form
+
 (define (add-rat x y)
   (make-rat (+ (* (numer x) (denom y))
                (* (numer y) (denom x)))
