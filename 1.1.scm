@@ -65,7 +65,7 @@ size
 (abs -10)
 ; 10
 
-(and (> x 5) (< x 10))
+(and (> 2 5) (< 2 10))
 ; #f
 
 (define (>= x y) (or (> x y) (= x y)))

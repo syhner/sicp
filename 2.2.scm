@@ -47,11 +47,12 @@
 
 ; ----
 
-(define (map proc items)
-  (if (null? items)
-    '() ; nil
-    (cons (proc (car items))
-          (map proc (cdr items)))))
+; commented out because map should accept a variadic parameter list
+; (define (map proc items)
+;   (if (null? items)
+;     '() ; nil
+;     (cons (proc (car items))
+;           (map proc (cdr items)))))
 
 (map (lambda (x) (* x x)) one-through-four) ; 1 4 9 16
 
@@ -76,8 +77,8 @@
 (define (tree-map f t)
   (cond ((null? t) '())
     ((not (pair? t)) (f t))
-    else (cons (tree-map f (car t))
-               (tree-map f (cdr t)))))
+    (else (cons (tree-map f (car t))
+            (tree-map f (cdr t))))))
 
 ; using map
 (define (tree-map f t)
@@ -135,8 +136,8 @@
 
 (enumerate-tree (list 1 (list 2 (list 3 4)) 5)) ; => ( 1 2 3 4 5 )
 
-(define (map f xs) ; xs is typically used to indicate a list
-  (accumulate (lambda (x y) (cons (f x) y)) '() xs))
+; (define (map f xs) ; xs is typically used to indicate a list
+;   (accumulate (lambda (x y) (cons (f x) y)) '() xs))
 (define (append xs ys)
   (accumulate cons ys xs))
 (define (length xs)
@@ -215,4 +216,4 @@
 (define (reverse xs)
   (fold-left (lambda (x y) (cons y x)) '() xs))
 
-(reverse (list 1 2 3 4 5)) => '(5 4 3 2 1)
+(reverse (list 1 2 3 4 5)) ; => '(5 4 3 2 1)
