@@ -37,7 +37,7 @@
           (+ a (/ dx 2.0))
           (lambda (x) (+ x dx))
           b)
-    dx))
+     dx))
 
 (integral cube 0 1 0.01) ; => .24998750000000042
 (integral cube 0 1 0.001) ; => .249999875000001

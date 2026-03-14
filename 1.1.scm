@@ -30,21 +30,27 @@ size
 ; the expression will never return a value because the interpreter tries to evaluate (p) and enters endless recursion.
 ; this is what the scheme interpreter uses
 ; interpreter doesn’t have to manage unevaluated expressions (thunks)
+; => (test 0 (p))
+; => (p)
+; => (p)
+; => ...
 
-; With normal-order evaluation (lazy / evaluate only when needed /fully expand and then reduce)
+; With normal-order evaluation (lazy / evaluate only when needed / fully expand and then reduce)
 ; the expression will evaluate to zero. The (p) expression is never evaluated because it is not necessary to do so.
+; (test 0 (p))
+; => (if (= 0 0) 0 (p))
+; => (if #t 0 (p))
+; => 0
+
+
 ; opt-in to lazy evaluation with
 (define (delay expr) (lambda () expr))
 (define (force thunk) (thunk))
 
-; ----
+; (delay (+ 1 2)) returns a procedure, and (+ 1 2) is not computed yet
+; (force (delay (+ 1 2))) evaluates to 3
 
-(define (abs x)
-  (cond ((> x 0) x)
-    ((= x 0) 0)
-    ((< x 0) (- x))))
-(abs -10)
-; 10
+; ----
 
 (define (abs x)
   (cond ((< x 0) (- x))
@@ -60,6 +66,7 @@ size
 ; 10
 
 (and (> x 5) (< x 10))
+; #f
 
 (define (>= x y) (or (> x y) (= x y)))
 (>= 1 0)
@@ -93,7 +100,7 @@ guess
 (< (abs (- (square guess) x)) 0.001))
 
 (define (sqrt x)
-(sqrt-iter 1.0 x))
+(sqrt-iter 1.0 x)) ; 1.0 is the initial guess
 
 (sqrt 9)
 ; 3.00009155413138
@@ -103,12 +110,12 @@ guess
 (define (sqrt x)
   (define (good-enough? guess x)
     (< (abs (- (square guess) x)) 0.001))
-  (define (improve guess x) 
+  (define (improve guess x)
     (average guess (/ x guess)))
   (define (sqrt-iter guess x)
     (if (good-enough? guess x)
-      guess
-      (sqrt-iter (improve guess x) x)))
+        guess
+        (sqrt-iter (improve guess x) x)))
   (sqrt-iter 1.0 x))
 
 (sqrt 9)

@@ -77,7 +77,7 @@
 ; => (iter 5 3 0)
 ; => 3
 
-; ---
+; ----
 
 (define (inc x) (+ x 1))
 (define (dec x) (- x 1))
@@ -130,6 +130,9 @@
 ; 292
 
 ; ----
+
+; let f(n) = n for n < 3
+;            f(n-1) + 2f(n-2) + 3f(n-3) for n >= 3
 
 ; recursive
 (define (f n)
@@ -197,7 +200,7 @@
   (iter n 1))
 ; O(n) time, O(1) space
 
-; recursive optimised
+; recursive optimised by successive squaring
 (define (fast-expt b n)
   (cond ((= n 0) 1)
     ((= (remainder n 2) 0) (square (fast-expt b (/ n 2))))
