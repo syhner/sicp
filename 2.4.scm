@@ -1,3 +1,5 @@
+(load "3.3.scm") ; operation table
+
 ; rectangular form representation
 (define (real-part z) (car z))
 (define (imag-part z) (cdr z))
@@ -175,7 +177,7 @@
     (* (magnitude z) (sin (angle z))))
   (define (make-from-real-imag x y)
     (cons (sqrt (+ (square x) (square y)))
-          (atan y x))
+          (atan y x)))
   ;; interface to the rest of the system
   (define (tag x) (attach-tag 'polar x))
   (put 'real-part '(polar) real-part)
@@ -185,9 +187,10 @@
   (put 'make-from-real-imag 'polar
        (lambda (x y) (tag (make-from-real-imag x y))))
   (put 'make-from-mag-ang 'polar
-       (lambda (r a) (tag (make-from-mag-ang r a))))))
+       (lambda (r a) (tag (make-from-mag-ang r a)))))
 
-; generic selectors can be rewritten to pull from the table
+; helpers
+; look up procedure based on operation name and type tags (used outside of package)
 (define (apply-generic op . args)
   (let ((type-tags (map type-tag args)))
     (let ((proc (get op type-tags)))
@@ -195,6 +198,14 @@
           (apply proc (map contents args))
           (error "No method for these types: APPLY-GENERIC"
                  (list op type-tags))))))
+; look up procedure based on operation name and type key (useful inside of package)
+(define (apply-specific op type . args)
+  (let ((proc (get op type)))
+    (if proc
+        (apply proc args)
+        (error op "no method for type" op type))))
+
+; generic selectors can be rewritten to pull from the table
 (define (real-part z) (apply-generic 'real-part z))
 (define (imag-part z) (apply-generic 'imag-part z))
 (define (magnitude z) (apply-generic 'magnitude z))
@@ -208,21 +219,32 @@
 
 ; ----
 
+(define (using . installers)
+  (reset)
+  (for-each (lambda (f) (f)) installers))
+
+(using rectangular-pkg polar-pkg)
+
+(add-complex (make-from-real-imag 1 2) (make-from-real-imag 3 4)) ; => ('rectangular 4 6)
+(mul-complex (make-from-mag-ang 5 1) (make-from-mag-ang 6 2)) ; => ('polar 30 3)
+
+; ----
+
 ; message-passing approach (dispatch on operation name)
 
-(define (make-from-real-imag x y)
+(define (make-from-real-image-message-passing x y)
   (define (dispatch op)
     (cond ((eq? op 'real-part) x)
           ((eq? op 'imag-part) y)
           ((eq? op 'magnitude) (sqrt (+ (square x) (square y))))
           ((eq? op 'angle) (atan y x))
-          (else (error "Unknown op: MAKE-FROM-REAL-IMAG" op))))
+          (else (error "Unknown op: MAKE-FROM-REAL-IMAGE" op))))
     dispatch)
 
-(define (apply-generic op arg) (arg op))
+(define (apply-generic-message-passing op arg) (arg op))
 
-(apply-generic 'real-part (make-from-real-imag 3 4)) ; => 3
-(apply-generic 'magnitude (make-from-real-imag 0 1)) ; => 1
+(apply-generic-message-passing 'real-part (make-from-real-image-message-passing 3 4)) ; => 3
+(apply-generic-message-passing 'magnitude (make-from-real-image-message-passing 0 1)) ; => 1
 
 ; ----
 

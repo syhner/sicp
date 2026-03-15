@@ -63,20 +63,20 @@
 
 ; we can define cons, car, cdr as procedures without using the data structures
 
-; 1 way to do it
-(define (cons x y)
-  (define (dispatch m)
-    (cond ((= m 0) x)
-      ((= m 1) y)
-    (else (error "Argument not 0 or 1: CONS" m))))
-      dispatch)
-(define (car z) (z 0))
-(define (cdr z) (z 1))
+; 1 way to do it (illustration only - commented out to avoid clobbering built-in cons/car/cdr)
+; (define (cons x y)
+;   (define (dispatch m)
+;     (cond ((= m 0) x)
+;       ((= m 1) y)
+;     (else (error "Argument not 0 or 1: CONS" m))))
+;       dispatch)
+; (define (car z) (z 0))
+; (define (cdr z) (z 1))
 
-; another way to do it
-(define (cons x y) (lambda (selector) (selector x y))) ; wraps its two values into a closure
-(define (car pair) (pair (lambda (x y) x)))
-(define (cdr pair) (pair (lambda (x y) y)))
+; another way to do it (illustration only - commented out to avoid clobbering built-in cons/car/cdr)
+; (define (cons x y) (lambda (selector) (selector x y))) ; wraps its two values into a closure
+; (define (car pair) (pair (lambda (x y) x)))
+; (define (cdr pair) (pair (lambda (x y) y)))
 
 (car (cons 'a 'b))
 ; (car ((lambda (m) (m 'a 'b))))
