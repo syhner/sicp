@@ -1,5 +1,5 @@
 (define one-through-four (list 1 2 3 4))
-; (cons 1 (cons 2 (cons 3 nil)))
+; (cons 1 (cons 2 (cons 3 (cons 4 nil))))
 ; (1 2 3)
 
 (car one-through-four) ; 1 = "get first element of list"
@@ -9,7 +9,7 @@
 (cdr one-through-four) ; (2 3 4) = "get rest of list"
 (cddr one-through-four) ; (3 4)
 (cdddr one-through-four) ; (4)
-; (cdar one-through-four) ; error = cdr(car(...)) = cdr(1)
+; (cdar one-through-four) ; cdr(car(...)) = cdr(1) => error
 
 (define (list-ref items n)
   (if (= n 0)
