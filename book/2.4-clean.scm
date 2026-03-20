@@ -139,7 +139,9 @@
   ((get 'make-from-real-imag 'complex) x y))
 (define (make-complex-from-mag-ang r a)
   ((get 'make-from-mag-ang 'complex) r a))
-; helpers around apply-generic
+; helpers around apply-generic - if packages use these instead of primitive
+; + - * / then it unlocks composition of expressions e.g. rational objects
+; of complex numbers given we wrote a rational package
 (define (add x y) (apply-generic 'add x y))
 (define (sub x y) (apply-generic 'sub x y))
 (define (mul x y) (apply-generic 'mul x y))
