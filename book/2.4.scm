@@ -24,23 +24,23 @@
 
 ; generic operations
 (define (add-complex z1 z2)
-(make-from-real-imag (+ (real-part z1) (real-part z2))
-                     (+ (imag-part z1) (imag-part z2))))
+  (make-from-real-imag (+ (real-part z1) (real-part z2))
+                      (+ (imag-part z1) (imag-part z2))))
 (define (sub-complex z1 z2)
-(make-from-real-imag (- (real-part z1) (real-part z2))
-                     (- (imag-part z1) (imag-part z2))))
+  (make-from-real-imag (- (real-part z1) (real-part z2))
+                      (- (imag-part z1) (imag-part z2))))
 (define (mul-complex z1 z2)
-(make-from-mag-ang (* (magnitude z1) (magnitude z2))
-                   (+ (angle z1) (angle z2))))
+  (make-from-mag-ang (* (magnitude z1) (magnitude z2))
+                    (+ (angle z1) (angle z2))))
 (define (div-complex z1 z2)
-(make-from-mag-ang (/ (magnitude z1) (magnitude z2))
-                   (- (angle z1) (angle z2))))
+  (make-from-mag-ang (/ (magnitude z1) (magnitude z2))
+                    (- (angle z1) (angle z2))))
 
 ; ----
 
 ; explicit-dispatch approach
 
-; rather than having independent selectors and constructors, data abstraction (through tagged data) ensures generic operations work with all representations, even when mixed
+; rather than having independent selectors and constructors, data abstraction (through tagged data) ensures generic operations work with multiple representations
 ; generic operations are unchanged
 ; constructors attach tags, selectors strip tags
 
@@ -122,8 +122,9 @@
 ; ----
 
 ; data-directed approach (dispatch on data type)
-; avoids modifying generic selectors each time a new representation is added/removed
+; avoids modifying selectors each time a new representation is added/removed
 ; avoids naming conflicts between representations
+; the type is a list to allow for operations with multiple arguments which may be of different types
 
 ; +-------------+-------------------+---------------------------+
 ; | operation   | type list         | procedure                 |
@@ -140,8 +141,8 @@
 ; | ...         |                   |                           |
 ; +-------------+-------------------+---------------------------+
 
-; (put 'real-part '(rectangular) rectangular-real-part)
-; (get 'real-part '(rectangular)) => rectangular-real-part
+; (put 'real-part '(rectangular) rectangular-real-part)    ; PUT KEY1 KEY2 VALUE
+; (get 'real-part '(rectangular)) => rectangular-real-part ; GET KEY1 KEY2 VALUE
 
 (define (rectangular-pkg)
   ;; internal procedures
@@ -157,7 +158,7 @@
     (cons (* r (cos a)) (* r (sin a))))
   ;; interface to the rest of the system
   (define (tag x) (attach-tag 'rectangular x))
-  (put 'real-part '(rectangular) real-part) ; (rectangular) rather than the symbol rectangular to allow for the possibility of operations with multiple arguments, not all of the same type.
+  (put 'real-part '(rectangular) real-part)
   (put 'imag-part '(rectangular) imag-part)
   (put 'magnitude '(rectangular) magnitude)
   (put 'angle '(rectangular) angle)
@@ -226,11 +227,12 @@
 (using rectangular-pkg polar-pkg)
 
 (add-complex (make-from-real-imag 1 2) (make-from-real-imag 3 4)) ; => ('rectangular 4 6)
-(mul-complex (make-from-mag-ang 5 1) (make-from-mag-ang 6 2)) ; => ('polar 30 3)
+(mul-complex (make-from-mag-ang 5 1) (make-from-mag-ang 6 2))     ; => ('polar 30 3)
 
 ; ----
 
 ; message-passing approach (dispatch on operation name)
+; instead of the data object containing the type, it contains the operations themselves
 
 (define (make-from-real-image-message-passing x y)
   (define (dispatch op)
