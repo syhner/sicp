@@ -1,5 +1,3 @@
-; system structure - objects vs streams
-
 ; objects that can change and yet maintain their identity
 ; substitution model -> environment model
 ; grappling with time and concurrent execution
