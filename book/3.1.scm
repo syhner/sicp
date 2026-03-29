@@ -60,4 +60,3 @@
 ; same through aliasing
 (define peter-acc (make-account 100))
 (define paul-acc peter-acc)
-
