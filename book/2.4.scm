@@ -1,4 +1,4 @@
-(load "3.3.scm") ; operation table
+(load "optable.scm") ; operation table
 
 ; rectangular form representation
 (define (real-part z) (car z))

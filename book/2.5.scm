@@ -1,6 +1,6 @@
 (load "2.1.scm") ; rational number operations
 (load "2.4.scm") ; complex number operations
-(load "3.3.scm") ; operation table
+(load "optable.scm") ; operation table
 
 (define (add x y) (apply-generic 'add x y))
 (define (sub x y) (apply-generic 'sub x y))
