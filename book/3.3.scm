@@ -111,4 +111,4 @@
 (insert! 'a 'b 1 t)
 (lookup 'a 'b t) => ; 1
 
-; simulating digital circuits with connectors and constraints
+; simulating digital circuits and relations (e.g. F=ma where any change in one of the three should cause a change in the other two) with connectors and constraints through a declarative approach
