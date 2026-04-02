@@ -23,13 +23,13 @@ Notes from Structure and Interpretation of Computer Programs by Harold Abelson a
 - [9A Register Machines](lectures/9A.md) ([5.1](book/5.1.scm), [5.2](book/5.2.scm))
 - [9B Explicit-Control Evaluator](lectures/9B.md) ([5.4](book/5.4.scm))
 - [10A Compilation](lectures/10A.md) ([5.5](book/5.5.scm))
+- [10B Storage Allocation and Garbage Collection](lectures/10B.md) ([5.3](book/5.3.scm))
 
 Less directly represented
 
 - [3.4 Concurrency: Time Is of the Essence](book/3.4.scm)
 - [4.2 Variations on a Scheme—Lazy Evaluation](book/4.2.scm)
 - [4.3 Variations on a Scheme—Nondeterministic Computing](book/4.3.scm)
-- [5.3 Storage Allocation and Garbage Collection](book/5.3.scm)
 
 ## Book
 
