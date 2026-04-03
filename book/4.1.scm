@@ -6,7 +6,7 @@
 
 ; the metacircular evaluator is essentially a Scheme formulation of the environment model of evaluation where
 ; 1. to evaluate a combination (a compound expression other than a special form), evaluate the subexpressions and then apply the value of the operator subexpression to the values of the operand subexpressions.
-; 2. to apply a compound procedure to a set of arguments, evaluate the body of the procedure in a new environment. to construct this environment, extend the environment part of the procedure object by a frame in which the formal parameters of the procedure are bound to the arguments to which the procedure is applied.
+; 2. to apply a compound (non-primitive) procedure to a set of arguments, evaluate the body of the procedure in a new environment. to construct this environment, extend the environment part of the procedure object by a frame in which the formal parameters of the procedure are bound to the arguments to which the procedure is applied.
 
 ; > These two rules describe the essence of the evaluation process, a basic cycle in which expressions to be evaluated in environments are reduced to procedures to be applied to arguments, which in turn are reduced to new expressions to be evaluated in new environments, and so on, until we get down to symbols, whose values are looked up in the environment, and to primitive procedures, which are applied directly.
 
