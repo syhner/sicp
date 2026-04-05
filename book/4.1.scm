@@ -114,7 +114,7 @@
 ; variables are represented by symbols
 (define (variable? exp) (symbol? exp))
 
-; quotations have the form (quote ⟨text-of-quotation⟩):
+; quotations have the form (quote <text-of-quotation>):
 (define (quoted? exp) (tagged-list? exp 'quote))
 (define (text-of-quotation exp) (cadr exp))
 
@@ -124,14 +124,14 @@
       (eq? (car exp) tag)
       false))
 
-; assignments have the form (set! ⟨var⟩ ⟨value⟩)
+; assignments have the form (set! <var> <value>)
 (define (assignment? exp) (tagged-list? exp 'set!))
 (define (assignment-variable exp) (cadr exp))
 (define (assignment-value exp) (caddr exp))
 
-; definitions have the form (define ⟨var⟩ ⟨value⟩)
-; or (define (⟨var⟩ ⟨parameter1⟩. . . ⟨parametern⟩) ⟨body⟩) which is syntactic sugar for
-; (define ⟨var⟩ (lambda (⟨parameter1⟩. . . ⟨parametern⟩) ⟨body⟩))
+; definitions have the form (define <var> <value>)
+; or (define (<var> <parameter1>. . . <parametern>) <body>) which is syntactic sugar for
+; (define <var> (lambda (<parameter1>. . . <parametern>) <body>))
 (define (definition? exp) (tagged-list? exp 'define))
 (define (definition-variable exp)
   (if (symbol? (cadr exp))
