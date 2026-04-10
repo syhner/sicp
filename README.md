@@ -60,3 +60,8 @@ Less directly represented
    3. [Storage Allocation and Garbage Collection](book/5.3.scm)
    4. [The Explicit-Control Evaluator](book/5.4.scm)
    5. [Compilation](book/5.5.scm)
+
+## Other
+
+- Original Lisp paper: Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I — John McCarthy (1960)
+  - a more concise/readable version: The Roots of Lisp — Paul Graham
