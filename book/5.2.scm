@@ -3,18 +3,18 @@
 ; simulator for machines described in the register-machine language. the simulator is a scheme program with four interface procedures:
 
 ; constructs and returns a model of the machine with the given registers, operations, and controller.
-(make-machine register-names operations controller)
+(make-machine <register-names> <operations> <controller>)
 
 ; stores a value in a simulated register in the given machine
-(set-register-contents! machine-model
-                        register-name
-                        value)
+(set-register-contents! <machine-model>
+                        <register-name>
+                        <value>)
 
 ; returns the contents of a simulated register in the given machine
-(get-register-contents ⟨machine-model⟩ ⟨register-name⟩)
+(get-register-contents <machine-model> <register-name>)
 
 ; simulates the execution of the given machine, starting from the beginning of the controller sequence and stopping when it reaches the end of the sequence
-(start machine-model)
+(start <machine-model>)
 
 (define gcd-machine
   (make-machine
